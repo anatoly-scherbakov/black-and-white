@@ -3,7 +3,7 @@ from pathlib import Path
 
 import colorama
 
-from textquest.models import Question, Banner, Quest
+from black_and_white import Question, Banner, Quest
 
 try:
     from yaml import CLoader as Loader, CDumper as Dumper

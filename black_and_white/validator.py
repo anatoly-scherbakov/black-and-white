@@ -1,4 +1,4 @@
-from textquest.models import Quest, Question, Banner
+from black_and_white import Quest, Question, Banner
 
 
 def check_has_start_label(quest: Quest):
