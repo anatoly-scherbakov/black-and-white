@@ -10,7 +10,7 @@ lint:
 unit:
 	pytest
 
-.PHONY: package
+.PHONY: package0
 package:
 	poetry check
 	pip check

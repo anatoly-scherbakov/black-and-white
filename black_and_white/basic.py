@@ -3,7 +3,7 @@ from pathlib import Path
 
 import colorama
 
-from black_and_white import Question, Banner, Quest
+from .models import Question, Banner, Quest, Choice
 
 try:
     from yaml import CLoader as Loader, CDumper as Dumper
@@ -72,12 +72,34 @@ def run(quest: Quest, label: str):
         return run(quest, label=goto)
 
 
+def deserialize_banner(data: dict) -> Banner:
+    return Banner(**data)
+
+
+def deserialize_question(data: dict) -> Question:
+    data.update({
+        'choices': [
+            Choice(
+                title=title,
+                goto=goto
+            )
+            for title, goto in data['choices'].items()
+        ]
+    })
+
+    return Question(**data)
+
+
 def load_from_file(filepath: str) -> Quest:
     with open(filepath, 'r') as f:
         data = load(f, Loader=Loader)
 
     return Quest(
-        (label, Banner(**item) if 'goto' in item else Question(**item))
+        (label, (
+            deserialize_question(item)
+            if 'choices' in item
+            else deserialize_banner(item)
+        ))
         for label, item
         in data.items()
     )

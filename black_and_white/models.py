@@ -1,32 +1,25 @@
+from pydantic import dataclasses
 from typing import Optional, List, Dict, Union
 
-import pydantic
 
-
-class Choice(pydantic.BaseModel):
+@dataclasses.dataclass(frozen=True)
+class Choice:
     title: str
     goto: Optional[str] = None
 
 
-class QuestItem(pydantic.BaseModel):
+@dataclasses.dataclass(frozen=True)
+class QuestItem:
     title: str
     content: Optional[str] = None
 
 
+@dataclasses.dataclass(frozen=True)
 class Question(QuestItem):
     choices: Optional[List[Choice]] = None
 
-    @pydantic.validator('choices', each_item=False, pre=True)
-    def validate_choices(cls, value: dict):
-        return [
-            Choice(
-                title=title,
-                goto=goto
-            )
-            for title, goto in value.items()
-        ]
 
-
+@dataclasses.dataclass(frozen=True)
 class Banner(QuestItem):
     goto: Optional[str] = None
 
