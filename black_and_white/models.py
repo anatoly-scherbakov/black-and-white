@@ -1,5 +1,5 @@
-from pydantic import dataclasses
-from typing import Optional, List, Dict, Union, Generator, Iterable
+import dataclasses
+from typing import Optional, List, Dict, Union, Iterable
 
 
 @dataclasses.dataclass(frozen=True)
@@ -30,6 +30,7 @@ class Question(QuestItem):
             choice.goto
             for choice
             in (self.choices or [])
+            if choice.goto
         ]
 
 

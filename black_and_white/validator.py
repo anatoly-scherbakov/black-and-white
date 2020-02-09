@@ -1,10 +1,12 @@
 from dataclasses import astuple
-from functools import reduce
+from typing import Iterable, TypeVar, Union
 
+import networkx as nx
 from more_itertools import flatten
 
 from .models import Quest
-import networkx as nx
+
+T = TypeVar('T')
 
 
 def check_has_start_label(quest: Quest):
@@ -17,6 +19,31 @@ def check_for_undefined_labels(quest: Quest):
             f'#{edge.source} redirects the user to #{edge.destination}, '
             f'which does not exist in the quest.'
         )
+
+
+class Sentinel:
+    pass
+
+
+def sequentially_deduplicate(iterable: Iterable[T]) -> Iterable[T]:
+    """
+    Remove sequential duplicates.
+
+        ..pycon
+        >>> list(sequentially_deduplicate([1, 3, 1, 1, 8, 1]))
+        [1, 3, 8, 1]
+    """
+    sentinel = Sentinel()
+    previous_item: Union[Sentinel, T] = sentinel
+
+    for item in iterable:
+        if (
+            item != previous_item
+            and item != sentinel
+        ):
+            yield item
+
+        previous_item = item
 
 
 def check_for_cycles(quest: Quest):
@@ -32,14 +59,7 @@ def check_for_cycles(quest: Quest):
         ...
 
     else:
-        cycle_sequence = reduce(
-            lambda acc, label: acc if (
-                acc
-                and acc[-1] == label
-            ) else acc + [label],
-            flatten(cycle),
-            []
-        )
+        cycle_sequence = sequentially_deduplicate(flatten(cycle))
 
         raise ValueError(
             f'There is a cycle in quest graph, which means the user might '

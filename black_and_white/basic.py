@@ -1,3 +1,5 @@
+from typing import Union, Dict, List, TypedDict, Optional
+
 from yaml import load
 from pathlib import Path
 
@@ -72,25 +74,39 @@ def run(quest: Quest, label: str):
         return run(quest, label=goto)
 
 
-def deserialize_banner(data: dict) -> Banner:
+class BannerDict(TypedDict):
+    title: str
+    content: Optional[str]
+    goto: Optional[str]
+
+
+def deserialize_banner(data: BannerDict) -> Banner:
     return Banner(**data)
 
 
-def deserialize_question(data: dict) -> Question:
-    data.update({
-        'choices': [
+class QuestionDict(TypedDict):
+    title: str
+    content: Optional[str]
+    choices: Dict[str, str]
+
+
+def deserialize_question(
+    data: QuestionDict
+) -> Question:
+    return Question(
+        title=data['title'],
+        content=data.get('content'),
+        choices=[
             Choice(
                 title=title,
                 goto=goto
             )
             for title, goto in data['choices'].items()
         ]
-    })
-
-    return Question(**data)
+    )
 
 
-def load_from_file(filepath: str) -> Quest:
+def load_from_file(filepath: Union[str, Path]) -> Quest:
     with open(filepath, 'r') as f:
         data = load(f, Loader=Loader)
 
@@ -105,7 +121,7 @@ def load_from_file(filepath: str) -> Quest:
     )
 
 
-def main():
+def main() -> None:
     filepath = Path(
         __file__
     ).parent.parent.joinpath(
