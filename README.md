@@ -13,9 +13,9 @@ A talk on Tomsk FP Meetup.
 Showcase how your project can be used:
 
 ```python
-from black_and_white.example import some_function
+# from black_and_white.example import some_function
 
-print(some_function(3, 4))
+# print(some_function(3, 4))
 # => 7
 ```
 
