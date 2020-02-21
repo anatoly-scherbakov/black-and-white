@@ -1,4 +1,4 @@
-# black-and-white
+# Life in Black and White
 
 [![wemake.services](https://img.shields.io/badge/%20-wemake.services-green.svg?label=%20&logo=data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAALGPC%2FxhBQAAAAFzUkdCAK7OHOkAAAAbUExURQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP%2F%2F%2F5TvxDIAAAAIdFJOUwAjRA8xXANAL%2Bv0SAAAADNJREFUGNNjYCAIOJjRBdBFWMkVQeGzcHAwksJnAPPZGOGAASzPzAEHEGVsLExQwE7YswCb7AFZSF3bbAAAAABJRU5ErkJggg%3D%3D)](https://wemake.services)
 [![Build Status](https://travis-ci.com/anatoly.scherbakov/black-and-white.svg?branch=master)](https://travis-ci.com/anatoly.scherbakov/black-and-white)
@@ -6,18 +6,7 @@
 [![Python Version](https://img.shields.io/pypi/pyversions/black-and-white.svg)](https://pypi.org/project/black-and-white/)
 [![wemake-python-styleguide](https://img.shields.io/badge/style-wemake-000000.svg)](https://github.com/wemake-services/wemake-python-styleguide)
 
-A talk on Tomsk FP Meetup.
-
-## Example
-
-Showcase how your project can be used:
-
-```python
-# from black_and_white.example import some_function
-
-# print(some_function(3, 4))
-# => 7
-```
+A very primitive YAML-based engine for text adventures in Python. Written for a Tomsk FP meetup before I decided it was a bad example for the topic I planned to talk about.
 
 ## License
 
