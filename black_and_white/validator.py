@@ -47,3 +47,11 @@ def check_for_cycles(quest: Quest):
 
 def check_for_unused_labels(quest: Quest):
     """Determine cases when a label in a quest is unused."""
+    edges = quest.edges()
+
+    total_labels, called_labels = zip(*map(astuple, edges))
+
+    unused_labels = set(total_labels) - set(called_labels) - {'start'}
+
+    if unused_labels:
+        raise ValueError(unused_labels)
